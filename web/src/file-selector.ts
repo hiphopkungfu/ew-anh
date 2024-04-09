@@ -32,9 +32,29 @@ export class FileSelector extends LitElement {
           accept=".csv"
           type="file"
           id="fileInput"
-          @change="${(e: Event) => console.log(e)}"
+          @change="${this._upload}"
         />
       </div>
     `;
+  }
+
+  async _upload(e: Event) {
+    const input = e.target as HTMLInputElement;
+    if (!input.files?.length) return;
+
+    const file = input.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      console.log({ response });
+    } catch (error) {
+      console.error("Error:", error);
+    }
   }
 }
