@@ -156,7 +156,6 @@ export class EwContent extends LitElement {
         };
       });
     } catch (e) {
-      console.log(e);
       throw new Error(`Error while parsing data: ${e}`);
     }
   }
