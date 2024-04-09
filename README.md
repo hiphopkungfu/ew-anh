@@ -1,15 +1,15 @@
 ## README by Anh
 
-This is what I could do within the afforded amount of time. I worked in a few sessions with breaks in-between. I've spent a bit more time on it than I had planned because this is my first little Lit adventure. I hope I hit the most important marks.
-I feel confident will be able to handle these kinds of tasks a lot faster, because I lost a lot of time getting used to the patterns.
+This is what I could do within the afforded amount of time. I worked in a few sessions with breaks in-between. I've spent a bit more time on it than I had planned because this is my first Lit adventure. I hope I hit the most important marks.
+I lost a lot of time getting used to the patterns, but I feel confident will be able to handle these kinds of tasks a lot faster.
 
 ### Completed:
 
 - Upload a .csv
 - Get data
 - Parse data
-- Show results on the content page
 - Catch parsing errors
+- Show results on the content page
 
 ### Points missed:
 
@@ -23,11 +23,12 @@ Shame I couldn't get to it, but if I had more time I would do these as follows:
 
 ### Nice to have:
 
-- Collapsible container for each question
+- Make container collapsible for each question
 - Accurate styling (accurate to image reference)
 - Localization: i18n
 - Responsive design: set breakpoints, min-width for <ew-collapsible> and possibly hide/swap large visual elements (like emojis or bar)
 - Snapshot test using the provided .csv to infer the expected output.
+- Each tally is now its own property (like agreed, disagreed, etc.). I would like to define an object property that's more compact. Didn't want to linger on it.
 
 ## Assignment by Ervaringwijzer
 
