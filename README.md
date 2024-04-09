@@ -29,6 +29,8 @@ Shame I couldn't get to it, but if I had more time I would do these as follows:
 - Responsive design: set breakpoints, min-width for <ew-collapsible> and possibly hide/swap large visual elements (like emojis or bar)
 - Snapshot test using the provided .csv to infer the expected output.
 - Each tally is now its own property (like agreed, disagreed, etc.). I would like to define an object property that's more compact. Didn't want to linger on it.
+- Feedback: show spinner after api call
+- Use private properties
 
 ## Assignment by Ervaringwijzer
 
