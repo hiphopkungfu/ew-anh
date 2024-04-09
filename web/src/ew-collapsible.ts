@@ -26,11 +26,20 @@ export class EwCollapsible extends LitElement {
     sharedStyles,
     css`
       .collapsible-container {
-        display: block;
+        display: flex;
+        flex-direction: column;
         width: 100%;
-        min-height: 10em;
+        height: 20em;
         border: 1px solid var(--ew-gray-light);
         border-radius: var(--input-border-radius);
+      }
+
+      .answers {
+        flex: 1;
+      }
+
+      .footer {
+        justify-self: flex-end;
       }
     `,
   ];
@@ -54,6 +63,31 @@ export class EwCollapsible extends LitElement {
   stronglyDisagree = 0;
 
   render() {
-    return html`<div class="collapsible-container">${this.title}</div>`;
+    return html`<div class="collapsible-container">
+      <div class="header">
+        <h1>${this.title}</h1>
+      </div>
+
+      <div class="answers">
+        <div>agree: ${this.agree}</div>
+        <div>disagree ${this.disagree}</div>
+        <div>neutral ${this.neutral}</div>
+        <div>stronglyAgree ${this.stronglyAgree}</div>
+        <div>stronglyDisagree ${this.stronglyDisagree}</div>
+      </div>
+
+      <div class="footer">
+        <div>
+          [answered]
+          ${this.agree +
+          this.disagree +
+          this.neutral +
+          this.stronglyAgree +
+          this.stronglyDisagree}
+        </div>
+
+        <div>[skipped] ${this.skipped}</div>
+      </div>
+    </div>`;
   }
 }

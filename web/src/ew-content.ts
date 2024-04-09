@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "../node_modules/lit";
-import { customElement } from "../node_modules/lit/decorators.js";
+import { customElement, property } from "../node_modules/lit/decorators.js";
 import sharedStyles from "./sharedStyles";
 import "./file-selector.js";
 import "./ew-button.js";
@@ -24,39 +24,142 @@ export class EwContent extends LitElement {
         gap: 4px;
         flex-direction: column;
       }
+
+      button {
+        color: var(--ew-white);
+        background-color: var(--ew-theme-color);
+        border: none;
+        border-radius: 4px;
+        padding: 8px;
+      }
     `,
   ];
+
+  @property({ type: Object })
+  data = initialData;
+  @property({ type: Boolean })
+  loaded = false;
 
   render() {
     return html`
       <div class="container center flex-grid ">
         <file-selector></file-selector>
-        <ew-button></ew-button>
+        <button @click="${this._getData}">Get data</button>
+        <!-- <ew-button></ew-button> -->
 
-        <!-- Map data: each (question, index) in questionnaire, count invitations.answers[index] -->
-        ${this.mockData?.questionnaire?.questions.length > 0
-          ? this.mockData.questionnaire.questions.map(
-              (q, index) => html` <ew-collapsible title=${q}></ew-collapsible> `
+        ${this.data?.length > 0 && this.loaded
+          ? this.data.map(
+              ({
+                q,
+                agree,
+                disagree,
+                neutral,
+                skipped,
+                stronglyAgree,
+                stronglyDisagree,
+              }) =>
+                html`
+                  <ew-collapsible
+                    title=${q}
+                    agree=${agree}
+                    disagree=${disagree}
+                    neutral=${neutral}
+                    skipped=${skipped}
+                    stronglyAgree=${stronglyAgree}
+                    stronglyDisagree=${stronglyDisagree}
+                  ></ew-collapsible>
+                `
             )
           : html``}
       </div>
     `;
   }
 
-  mockData = {
-    questionnaire: {
-      questions: [
-        "1 Ik vind aardappels een lekkere groente",
-        "1 Aardappels moet je koken in water",
-        "2 Ik heb plezier tijdens het koken van aardappels",
-        "2 Als ik plezier had tijdens het koken smaken aardappels lekkerder",
-        "3 Het afgieten van het water is lastig",
-        "3 Soms brand ik mijn handen aan het water dat in de theedoek terecht komt",
-        "3 Mijn handen laten de pan dan los en deze valt dan in de gootsteen",
-        "3 De volgende keer gebeurt me dit niet nogeens",
-        "3 Mentaal zie ik op tegen het afgieten van aardappels",
-      ],
-    },
-    invitations: { answers: [] },
-  };
+  async _getData() {
+    const response = await fetch("/api/data");
+
+    if (!response.ok) {
+      const text = await response.text();
+      this.loaded = false;
+      throw new Error(
+        `Request rejected with status ${response.status} and data ${text} `
+      );
+    }
+
+    const jsonData = await response.json();
+    this.data = this._parseData(jsonData);
+    this.loaded = true;
+  }
+
+  _parseData(jsonData: EwResult) {
+    try {
+      return jsonData.questionnaire.questions.map((q, index) => {
+        let agree = 0;
+        let disagree = 0;
+        let neutral = 0;
+        let skipped = 0;
+        let stronglyAgree = 0;
+        let stronglyDisagree = 0;
+
+        jsonData.invitations.forEach((inv) => {
+          const matchedAnswer = inv.answers[index].answer;
+          switch (matchedAnswer) {
+            case "Mee eens": {
+              agree++;
+              break;
+            }
+            case "Niet mee eens": {
+              disagree++;
+              break;
+            }
+            case "Neutraal": {
+              neutral++;
+              break;
+            }
+            case "Overgeslagen": {
+              skipped++;
+              break;
+            }
+            case "Helemaal mee eens": {
+              stronglyAgree++;
+              break;
+            }
+            case "Helemaal niet mee eens": {
+              stronglyDisagree++;
+              break;
+            }
+          }
+        });
+
+        return {
+          q,
+          agree,
+          disagree,
+          neutral,
+          skipped,
+          stronglyAgree,
+          stronglyDisagree,
+        };
+      });
+    } catch (e) {
+      throw new Error(`Error while parsing data`);
+    }
+  }
 }
+
+interface EwResult {
+  invitations: { answers: { answer: string }[] }[];
+  questionnaire: { questions: string[] };
+}
+
+const initialData = [
+  {
+    q: "",
+    agree: -1,
+    disagree: -1,
+    neutral: -1,
+    skipped: -1,
+    stronglyAgree: -1,
+    stronglyDisagree: -1,
+  },
+];
