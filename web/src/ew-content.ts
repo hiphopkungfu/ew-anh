@@ -20,7 +20,7 @@ export class EwContent extends LitElement {
 
       .flex-grid {
         display: flex;
-        gap: 4px;
+        gap: 16px;
         flex-direction: column;
       }
 
@@ -30,6 +30,7 @@ export class EwContent extends LitElement {
         border: none;
         border-radius: 4px;
         padding: 8px;
+        cursor: pointer;
       }
     `,
   ];
@@ -51,9 +52,11 @@ export class EwContent extends LitElement {
 
   render() {
     return html`
-      <div class="container center flex-grid ">
+      <div class="container center flex-grid">
         <file-selector></file-selector>
-        <button @click="${this._getData}">Get data</button>
+        <div>
+          <button @click="${this._getData}">Get data</button>
+        </div>
 
         ${this.data?.length > 0 && this.loaded
           ? this.data.map(
@@ -99,9 +102,12 @@ export class EwContent extends LitElement {
     this.loaded = true;
   }
 
-  _parseData(jsonData: EwResult) {
+  _parseData(data: EwResult) {
     try {
-      return jsonData.questionnaire.questions.map((q, index) => {
+      if (!data?.invitations) {
+        throw new Error(`Questionnaire is empty!`);
+      }
+      return data.questionnaire.questions.map((q, index) => {
         let agree = 0;
         let disagree = 0;
         let neutral = 0;
@@ -109,7 +115,7 @@ export class EwContent extends LitElement {
         let stronglyAgree = 0;
         let stronglyDisagree = 0;
 
-        jsonData.invitations.forEach((inv) => {
+        data.invitations.forEach((inv) => {
           const matchedAnswer = inv.answers[index].answer;
           switch (matchedAnswer) {
             case "Mee eens": {
@@ -150,7 +156,8 @@ export class EwContent extends LitElement {
         };
       });
     } catch (e) {
-      throw new Error(`Error while parsing data`);
+      console.log(e);
+      throw new Error(`Error while parsing data: ${e}`);
     }
   }
 }

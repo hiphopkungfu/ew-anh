@@ -2,6 +2,7 @@ import { LitElement, html, css } from "../node_modules/lit";
 import { customElement, property } from "../node_modules/lit/decorators.js";
 import sharedStyles from "./sharedStyles";
 
+// I had planned to make this element collapsible, but ran out of time! Please forgive the inaccurate naming.
 @customElement("ew-collapsible")
 export class EwCollapsible extends LitElement {
   static styles = [
@@ -38,7 +39,6 @@ export class EwCollapsible extends LitElement {
     `,
   ];
 
-  // @Todo: limit range to positive integers
   @property({ type: String })
   title = "";
   @property({ type: Number })
