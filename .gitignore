@@ -2,6 +2,5 @@ web/build
 web/node_modules
 pkg
 backend/web
-images
 Notes.md
 web/package-lock.json
