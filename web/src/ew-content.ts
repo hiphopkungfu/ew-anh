@@ -2,20 +2,13 @@ import { LitElement, html, css } from "../node_modules/lit";
 import { customElement, property } from "../node_modules/lit/decorators";
 import sharedStyles from "./sharedStyles";
 import "./file-selector.js";
+import "./ew-button.js";
 
 @customElement("ew-content")
 export class EwContent extends LitElement {
   static styles = [
     sharedStyles,
     css`
-      button {
-        color: var(--ew-white);
-        background-color: var(--ew-theme-color);
-        border: none;
-        border-radius: 4px;
-        padding: 8px;
-      }
-
       .container {
         width: 60vw;
         margin: auto;
@@ -36,10 +29,7 @@ export class EwContent extends LitElement {
         <h1>Hello, ${this.world}</h1>
 
         <file-selector></file-selector>
-
-        ${this.world === ""
-          ? html`<button @click="${this._getWorld}">Get data</button>`
-          : html``}
+        <ew-button></ew-button>
       </div>
     `;
   }
