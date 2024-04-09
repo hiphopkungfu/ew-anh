@@ -2,24 +2,6 @@ import { LitElement, html, css } from "../node_modules/lit";
 import { customElement, property } from "../node_modules/lit/decorators.js";
 import sharedStyles from "./sharedStyles";
 
-// enum Answer {
-//     Agree = "Mee eens",
-//     Disagree = "Niet mee eens",
-//     Neutral = "Neutraal",
-//     Skipped = "Overgeslagen",
-//     StronglyArgee = "Helemaal mee eens",
-//     StronglyDisargee = "Helemaal niet mee eens",
-// }
-
-interface Invitation {
-  answers: string[];
-}
-
-interface EwResult {
-  invitations: Invitation[];
-  questionnaire: { questions: string[] };
-}
-
 @customElement("ew-collapsible")
 export class EwCollapsible extends LitElement {
   static styles = [
@@ -43,12 +25,10 @@ export class EwCollapsible extends LitElement {
       }
     `,
   ];
+
+  // @Todo: limit range to positive integers
   @property({ type: String })
   title = "";
-
-  //   @property({ type: Object })
-  //   data = { questionnaire: { questions: [] }, invitations: { answers: [] } };
-
   @property({ type: Number })
   agree = 0;
   @property({ type: Number })

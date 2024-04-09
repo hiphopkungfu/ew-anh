@@ -45,7 +45,6 @@ export class EwContent extends LitElement {
       <div class="container center flex-grid ">
         <file-selector></file-selector>
         <button @click="${this._getData}">Get data</button>
-        <!-- <ew-button></ew-button> -->
 
         ${this.data?.length > 0 && this.loaded
           ? this.data.map(

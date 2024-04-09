@@ -41,20 +41,17 @@ export class FileSelector extends LitElement {
   async _upload(e: Event) {
     const input = e.target as HTMLInputElement;
     if (!input.files?.length) return;
-
     const file = input.files[0];
     const formData = new FormData();
     formData.append("file", file);
 
     try {
-      const response = await fetch("/api/upload", {
+      await fetch("/api/upload", {
         method: "POST",
         body: formData,
       });
-
-      console.log({ response });
     } catch (error) {
-      console.error("Error:", error);
+      throw new Error(`${error}`);
     }
   }
 }
