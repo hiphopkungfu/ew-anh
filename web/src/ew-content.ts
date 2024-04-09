@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "../node_modules/lit";
 import { customElement, property } from "../node_modules/lit/decorators";
 import sharedStyles from "./sharedStyles";
+import "./file-selector.js";
 
 @customElement("ew-content")
 export class EwContent extends LitElement {
@@ -33,6 +34,8 @@ export class EwContent extends LitElement {
     return html`
       <div class="container center">
         <h1>Hello, ${this.world}</h1>
+
+        <file-selector></file-selector>
 
         ${this.world === ""
           ? html`<button @click="${this._getWorld}">Get data</button>`
