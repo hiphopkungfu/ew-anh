@@ -33,6 +33,7 @@ export class EwCollapsible extends LitElement {
         display: flex;
         justify-self: flex-end;
         flex-direction: row;
+        gap: 8px;
       }
     `,
   ];
@@ -61,29 +62,28 @@ export class EwCollapsible extends LitElement {
 
       <div class="content">
         <div class="answers">
-            <div>agree: ${this.agree}</div>
-            <div>disagree ${this.disagree}</div>
-            <div>neutral ${this.neutral}</div>
-            <div>stronglyAgree ${this.stronglyAgree}</div>
-            <div>stronglyDisagree ${this.stronglyDisagree}</div>
+            <div>Helemaal mee eens: ${this.stronglyAgree}</div>
+            <div>Mee eens: ${this.agree}</div> 
+            <div>Neutraal: ${this.neutral}</div>
+            <div>Niet mee eens: ${this.disagree}</div>
+            <div>Helemaal niet mee eens: ${this.stronglyDisagree}</div>
         </div>
 
         <div class="footer">
             <div>
-            [answered]
-            ${
-              this.agree +
-              this.disagree +
-              this.neutral +
-              this.stronglyAgree +
-              this.stronglyDisagree
-            }
+                Beantwoord:
+                ${
+                  this.agree +
+                  this.disagree +
+                  this.neutral +
+                  this.stronglyAgree +
+                  this.stronglyDisagree
+                }
             </div>
 
-            <div>[skipped] ${this.skipped}</div>
+            <div>Overgeslagen: ${this.skipped}</div>
         </div>
       </div>
-
     </div>`;
   }
 }

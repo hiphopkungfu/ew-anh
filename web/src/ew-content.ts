@@ -35,7 +35,17 @@ export class EwContent extends LitElement {
   ];
 
   @property({ type: Object })
-  data = initialData;
+  data = [
+    {
+      q: "",
+      agree: -1,
+      disagree: -1,
+      neutral: -1,
+      skipped: -1,
+      stronglyAgree: -1,
+      stronglyDisagree: -1,
+    },
+  ];
   @property({ type: Boolean })
   loaded = false;
 
@@ -149,15 +159,3 @@ interface EwResult {
   invitations: { answers: { answer: string }[] }[];
   questionnaire: { questions: string[] };
 }
-
-const initialData = [
-  {
-    q: "",
-    agree: -1,
-    disagree: -1,
-    neutral: -1,
-    skipped: -1,
-    stronglyAgree: -1,
-    stronglyDisagree: -1,
-  },
-];
