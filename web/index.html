@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ervaringwijzer</title>
+    <script type="text/javascript">
+      new EventSource("http://localhost:8080/esbuild").addEventListener(
+        "change",
+        () => {
+          location.reload(true);
+        },
+      );
+    </script>
+    <style type="text/css">
+      body {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <a href="/dashboard">Go to dashboard</a>
+    </section>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>By the <strong>Ervaringwijzer</strong> team.</p>
+        <p>&copy; 2024 Ervaringwijzer</p>
+      </div>
+    </footer>
+
+    <script>
+      let home = true;
+      const body = document.querySelector("body");
+
+      // Allow elements to be directly in the body
+      const bodyChildren = body.children;
+      let homepage = [];
+      for (let i = 0; i < bodyChildren.length; i++) {
+        const item = bodyChildren.item(i);
+        if (item.tagName !== "SCRIPT") {
+          homepage.push(item);
+        }
+      }
+
+      const ewContent = document.createElement("ew-content");
+
+      // Function that checks whether we should switch out the interactive content
+      const checkInteractive = function (route) {
+        const routeHome = route === "/";
+
+        // If we are at the homepage and are displaying the homepage, we don't
+        // have to do anything. If we are not on the homepage and not displaying
+        // it, we can also return.
+        if (routeHome === home) {
+          return;
+        }
+
+        // Set the correct content
+        if (routeHome) {
+          home = true;
+          body.removeChild(ewContent);
+          homepage.forEach((child) => body.appendChild(child));
+        } else {
+          home = false;
+          body.appendChild(ewContent);
+          homepage.forEach((child) => body.removeChild(child));
+        }
+      };
+
+      // Listen to url changes and react accordingly
+      window.addEventListener("popstate", (e) => {
+        checkInteractive(window.location.pathname);
+      });
+
+      checkInteractive(window.location.pathname);
+    </script>
+    <script type="module" src="/build/bundle.js"></script>
+  </body>
+</html>

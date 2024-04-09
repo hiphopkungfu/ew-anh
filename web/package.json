@@ -1,0 +1,15 @@
+{
+  "name": "simple-dashboard",
+  "version": "1.0.0",
+  "description": "A simple dashboard for Ervaringwijzer",
+  "main": "./src/ew-content.ts",
+  "repository": "lab.weave.nl/ervaringwijzer-v2/ervaringwijzer-assessment",
+  "author": "Martijn Janssen <martijn@ervaringwijzer.nl>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "lit": "^2.8.0",
+    "typescript": "^4.9.5"
+  }
+}
