@@ -2,7 +2,6 @@ import { LitElement, html, css } from "../node_modules/lit";
 import { customElement, property } from "../node_modules/lit/decorators.js";
 import sharedStyles from "./sharedStyles";
 import "./file-selector.js";
-import "./ew-button.js";
 import "./ew-collapsible.js";
 
 @customElement("ew-content")
