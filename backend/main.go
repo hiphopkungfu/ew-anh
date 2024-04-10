@@ -55,8 +55,8 @@ func main() {
 	log := logger.Sugar()
 
 	ctx, ctxErr := api.Context(api.BuildOptions{
-		EntryPoints: []string{"C:/Users/quang/dev/ew/web/src/ew-content.ts"},
-		Outfile:     "C:/Users/quang/dev/ew/web/build/bundle.js",
+		EntryPoints: []string{"./web/src/ew-content.js"},
+		Outfile:     "./web/build/bundle.js",
 		Bundle:      true,
 		LogLevel:    api.LogLevelInfo,
 		Write:       true,
@@ -73,7 +73,7 @@ func main() {
 	}
 
 	r := gin.Default()
-	r.Use(static.Serve("/", static.LocalFile("C:/Users/quang/dev/ew/web", false)))
+	r.Use(static.Serve("/", static.LocalFile("./web", false)))
 	api := r.Group("/api")
 	{
 		api.GET("/hello", func(ctx *gin.Context) {
@@ -148,7 +148,7 @@ func main() {
 	})
 
 	r.NoRoute(func(ctx *gin.Context) {
-		http.ServeFile(ctx.Writer, ctx.Request, "C:/Users/quang/dev/ew/web/index.html")
+		http.ServeFile(ctx.Writer, ctx.Request, "./web/index.html")
 	})
 
 	if err := r.Run(":8080"); err != nil {
